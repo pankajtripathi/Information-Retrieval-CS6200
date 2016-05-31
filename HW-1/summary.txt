@@ -1,0 +1,6 @@
+Model		      ArithmeticPrecision
+OkapiTF            0.1645
+TFIDF		           0.2458
+BM25		           0.2405
+Laplace		         0.1712
+JM		             0.2009
