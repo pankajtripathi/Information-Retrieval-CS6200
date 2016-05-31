@@ -1,7 +1,7 @@
 # Information-Retrieval
 
 ##Homework-1
-__Objective__
+__Objective__      
 Implement and compare various retrieval systems using vector space models and language models. Explain how and why their performance differs.
 
 This assignment will also introduce you to elasticsearch: one of the many available commercial-grade indexes. These instructions will generally not spell out how to accomplish various tasks in elasticsearch; instead, you are encouraged to try to figure it out by reading the online documentation. If you are having trouble, feel free to ask for help on Piazza or in office hours.
@@ -16,7 +16,7 @@ Download and install elasticsearch, and the marvel/sense plugin
 Download IR_data/AP89_DATA.zip from the Dropbox Data link. Contact the TAs if you need the password.      
 
 __Document Indexing__    
-Create an index of the downloaded corpus. The documents are found within the ap89_collection folder in the data .zip file. You will need to write a program to parse the documents and send them to your elasticsearch instance.
+Create an index of the downloaded corpus. You will need to write a program to parse the documents and send them to your elasticsearch instance.
 
 The corpus files are in a standard format used by TREC. Each file contains multiple documents. The format is similar to XML, but standard XML and HTML parsers will not work correctly. Instead, read the file one line at a time with the following rules:
 
@@ -31,7 +31,7 @@ Write a program to run the queries in the file query_desc.51-100.short.txt, incl
 
 You should write precisely one output file per retrieval model. Each line of an output file should specify one retrieved document, in the following format:
 
-<query-number> Q0 <docno> <rank> <score> Exp
+query-number Q0 docno rank score> Exp
 Where:
 
 is the number preceding the query in the query list
@@ -56,7 +56,7 @@ The matching score for document $d$ and query $q$ is as follows.
 
 $$ tf(d, q) = \sum_{w \in q} okapi\_tf(w, d) $$    
 
-__TF-IDF__
+__TF-IDF__      
 This is the second vector space model. The scoring function is as follows.
 
 $$ tfidf(d, q) = \sum_{w \in q} okapi\_tf(w, d) \cdot \log \frac{D}{df_w} $$
