@@ -40,55 +40,7 @@ Your program will run queries against elasticsearch. Instead of using their buil
 Implement the following retrieval models, using TF and DF scores from your elasticsearch index, as needed.     
 
 __Okapi TF__    
-This is a vector space model using a slightly modified version of TF to score documents. The Okapi TF score for term ww in document dd is as follows.
-
-okapi_tf(w,d)=tfw,dtfw,d+0.5+1.5⋅(len(d)/avg(len(d)))
-okapi_tf(w,d)=tfw,dtfw,d+0.5+1.5⋅(len(d)/avg(len(d)))
-Where:
-
-tfw,dtfw,d is the term frequency of term ww in document dd
-len(d)len(d) is the length of document dd
-avg(len(d))avg(len(d)) is the average document length for the entire corpus
-The matching score for document dd and query qq is as follows.
-
-tf(d,q)=∑w∈qokapi_tf(w,d)
-tf(d,q)=∑w∈qokapi_tf(w,d)    
-
 __TF-IDF__       
-This is the second vector space model. The scoring function is as follows.
-
-tfidf(d,q)=∑w∈qokapi_tf(w,d)⋅logDdfw
-tfidf(d,q)=∑w∈qokapi_tf(w,d)⋅log⁡Ddfw
-Where:
-
-DD is the total number of documents in the corpus
-dfwdfw is the number of documents which contain term ww     
-
 __Okapi BM25__     
-BM25 is a language model based on a binary independence model. Its matching score is as follows.
-
-bm25(d,q)=∑w∈q⎡⎣⎢⎢⎢log(D+0.5dfw+0.5)⋅tfw,d+k1⋅tfw,dtfw,d+k1((1−b)+b⋅len(d)avg(len(d)))⋅tfw,q+k2⋅tfw,qtfw,q+k2⎤⎦⎥⎥⎥
-bm25(d,q)=∑w∈q[log⁡(D+0.5dfw+0.5)⋅tfw,d+k1⋅tfw,dtfw,d+k1((1−b)+b⋅len(d)avg(len(d)))⋅tfw,q+k2⋅tfw,qtfw,q+k2]
-Where:
-
-tfw,qtfw,q is the term frequency of term ww in query qq
-k1k1, k2k2, and bb are constants. You can use the values from the slides, or try your own.     
-
 __Unigram LM with Laplace smoothing__      
-This is a language model with Laplace (“add-one”) smoothing. We will use maximum likelihood estimates of the query based on a multinomial model “trained” on the document. The matching score is as follows.
-
-lm_laplace(d,q)=∑w∈qlogp_laplace(w|d)p_laplace(w|d)=tfw,d+1len(d)+V
-lm_laplace(d,q)=∑w∈qlog⁡p_laplace(w|d)p_laplace(w|d)=tfw,d+1len(d)+V
-Where:
-
-VV is the vocabulary size – the total number of unique terms in the collection.       
-
 __Unigram LM with Jelinek-Mercer smoothing__     
-This is a similar language model, except that here we smooth a foreground document language model with a background model from the entire corpus.
-
-lm_jm(d,q)=∑w∈qlogp_jm(w|d)p_jm(w|d)=λtfw,dlen(d)+(1−λ)∑d′tfw,d′∑d′len(d′)
-lm_jm(d,q)=∑w∈qlog⁡p_jm(w|d)p_jm(w|d)=λtfw,dlen(d)+(1−λ)∑d′tfw,d′∑d′len(d′)
-Where:
-
-λ∈(0,1)λ∈(0,1) is a smoothing parameter which specifies the mixture of the foreground and background distributions.
-Think carefully about how to efficiently obtain the background model here. If you wish, you can instead estimate the corpus probability using cfwVcfwV.
