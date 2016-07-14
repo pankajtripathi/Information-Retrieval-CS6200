@@ -1,0 +1,27 @@
+1. Your seed urls i.e. urls in your first frontier
+    http://en.wikipedia.org/wiki/Harvard_University
+	http://www.harvard.edu
+	http://colleges.usnews.rankingsandreviews.com/best-colleges/harvard-university-166027/overall-rankings
+	http://colleges.usnews.rankingsandreviews.com/best-colleges/harvard-university-2155
+	http://www.webometrics.info/en/world
+	http://www.timeshighereducation.co.uk/world-university-rankings/2014-15/world-ranking
+	
+	
+2. Count of unique urls crawled individually
+   23000
+   
+3. Time take to crawl
+   8 hrs 58 mins
+   
+4. Total disk space size of your crawl or ES index size if applicable for Individual crawl
+   3.3 GB
+   
+5. Time taken to merge
+   2 hrs
+   
+6. Count of unique urls in Merged Index
+   68502
+   
+7. Merged ES index size
+   11.6 GB
+ 
