@@ -148,7 +148,7 @@ Prefer pages with higher in-link counts.
 If multiple pages have maximal in-link counts, choose the option which has been in the queue the longest.
 If the next page in the frontier is at a domain you have recently crawled a page from and you do not wish to wait, then you should crawl the next page from a different domain instead.
 
-__URL Canonicalization__     
+__URL Canonicalization__         
 Many URLs can refer to the same web resource. In order to ensure that you crawl 20,000 distinct web sites, you should apply the following canonicalization rules to all URLs you encounter.
 
 Convert the scheme and host to lower case: HTTP://www.Example.com/SomeFile.html → http://www.example.com/SomeFile.html
@@ -158,28 +158,23 @@ Remove the fragment, which begins with #: http://www.example.com/a.html#anything
 Remove duplicate slashes: http://www.example.com//a.html → http://www.example.com/a.html
 You may add additional canonicalization rules to improve performance, if you wish to do so.
 
-__Document Processing__      
-Once you have downloaded a web page, you will need to parse it to update the frontier and save its contents. You should parse it using a third party library. We suggest jsoup for Java, and Beautiful Soup for Python. You will need to do the following:
+__Document Processing__         
+Once you have downloaded a web page, you will need to parse it to update the frontier and save its contents. You should parse it using a third party library. We suggest jsoup for Java, and Beautiful Soup for Python. 
 
-1. Extract all links in <a> tags. Canonicalize the URL, add it to the frontier if it has not been crawled (or increment the in-link count if the URL is already in the frontier), and record it as an out-link in the link graph file.       
-2. Extract the document text, stripped of all HTML formatting, JavaScript, CSS, and so on. Write the document text to a file in the same format as the AP89 corpus, as described below. Use the canonical URL as the DOCNO. If the page has a <title> tag, store its contents in a <HEAD> element in the file. This will allow you to use your existing indexing code from HW1 to index these documents.           
-3. Store the entire HTTP response separately, as described below.        
-
-__Link Graph__           
+__Link Graph__
 You should also write a link graph reporting all out-links from each URL you crawl, all the inlinks you have encountered (obviously there will be inlinks on the web that you dont discover). This will be used in a future assignment to calculate PageRank for your collection.
 
 option 1 : We prefer that you store the canonical links as two fields “inlinks” and “outlinks” in ElasticSearch, for each document. You will have to manage these fields appropriately, such that when you are done, your team has correct links for all document crawled.
 
-option 2: maintain a separate links file (you can do this even if you also do option1). Each line of this file contains a tab-separated list of canonical URLs. The first URL is a document you crawled, and the remaining URLs are out-links from the document. When all team members are finished with their crawls, you should merge your link graphs. Only submit one file, containing this merged graph. During the merge process, reduce any URL which was not crawled to just a domain.   
+option 2: maintain a separate links file (you can do this even if you also do option1). Each line of this file contains a tab-separated list of canonical URLs. The first URL is a document you crawled, and the remaining URLs are out-links from the document. When all team members are finished with their crawls, you should merge your link graphs. Only submit one file, containing this merged graph. During the merge process, reduce any URL which was not crawled to just a domain.      
 
-__Merging team indexes__     
+__Merging team indexes__          
 
 Ideally we would like to have the crawling process send any stored data directly to the team-index, while merging. But this is too much of a headache for students to keep their ES servers connected while crawling; so we allow for individual crawls, then merged in ES. If you use individual crawls to be merged at the end, you have to simulate a realistic environment: merge indexes (or the crawled data) into one ES index. Merging should happen as independent agents : everyone updates the index independently while ES servers are connected. Meaning not in a Master-Slave or Server-Client manner. This is team work.
 
- Once all team members are finished with their crawls, you will combine the documents to create a vertical search engine. It is required that team computer/ES are connected are the time of merging, and that each team member runs merging code against the merged index in an independent manner (no master-slave design)
+ Once all team members are finished with their crawls, you will combine the documents to create a vertical search engine. It is required that team computer/ES are connected are the time of merging, and that each team member runs merging code against the merged index in an independent manner (no master-slave design)        
 
-__Vertical Search__      
+__Vertical Search__     
 
 Add all 90,000 documents to an elasticsearch index, using the canonical URL as the document ID for de-duplication, and create a simple HTML page which runs queries against your elasticsearch index. You may either write your own interface, or use an existing tool such as Calaca or FacetView. Or modify this one written by one of our grad students. Your search engine should allow users to enter text queries, and display elasticsearch results to those queries from your index. The result list should contain at minimum the URL to the page you crawled.
-
 Make sure you run several queries on your group’s topic, and you think about the result quality. During your demo, you will be asked to explain how your seeds and crawls affected the search results.
