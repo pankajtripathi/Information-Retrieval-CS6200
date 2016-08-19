@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title> {{title}} - CS6200 Assessment Tool</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./../static/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body class="container">
+
+    <div class="btn-group col-md-4 col-md-offset-4" role="group" style="margin-top: 60px; margin-bottom: 60px">
+      <a class="btn btn-primary" href="./score?qid={{qid}}&did={{did}}&score=0">0</a>
+      <a class="btn btn-primary" href="./score?qid={{qid}}&did={{did}}&score=1">1</a>
+      <a class="btn btn-primary" href="./score?qid={{qid}}&did={{did}}&score=2">2</a>
+    </div>
+
+    <div class="col-md-10">
+      <h1 class="h2">{{ title }}</h1>
+      <p class="text">{{ text }}</p>
+      <p class="lead">
+        <a class="btn btn-primary btn-lg pull-right" href="{{ link }}" role="button">source</a>
+  </p>
+</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="./../static/js/bootstrap.min.js"></script>
+  </body>
+</html>

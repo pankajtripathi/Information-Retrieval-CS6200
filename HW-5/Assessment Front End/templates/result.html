@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title> CS6200 Assessment Tool </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./../static/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body class="container">
+
+    <div class="btn-group col-md-6 col-md-offset-3" role="group" style="margin-top: 60px; margin-bottom: 60px">
+      {% for item in queries %}
+      {% if item == index %}
+      <a class="btn btn-primary" href="./assess?id={{item}}">{{ queries[item] }}</a>
+      {% else %}
+      <a class="btn btn-secondary" href="./assess?id={{item}}">{{ queries[item] }}</a>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div class="col-lg-8"></div>
+    <div class="col-md-10 col-md-offset-1">
+      <div class="list-group">
+        {% for item in res %}
+        <a href="/detail?id={{item['id']}}&qid={{index}}" class="list-group-item" style="border: none">
+          <h4 class="list-group-item-heading">{{ item['title'] }}</h4>
+          {% if item['id'] in rel %}
+            <div class="col-sm-1" style="width: auto; padding: 1px 1px">
+              <span class="label label-pill label-success"> Rated </span>
+            </div>
+          {% endif %}
+          <p class="list-group-item-text">
+            <div style="padding-top: 3px">
+              {{ item['text'] }}
+            </div>
+          </p>
+        </a>
+        {% endfor %}
+      </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="./../static/js/bootstrap.min.js"></script>
+  </body>
+</html>

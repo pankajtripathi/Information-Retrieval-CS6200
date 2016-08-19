@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>HW5: Web assessment tool</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./../static/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body class="container">
+    <form class="form-group col-md-2 col-md-offset-5" method="POST" action="./assess" style="padding-top: 20%">
+        Please input your name:
+      <div class="input-group">
+        <input type="text" class="form-control" id="query" name="query" placeholder="{{ name }}" required>
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="  Start  "></input>
+        </span>
+      </div>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="./../static/js/bootstrap.min.js"></script>
+  </body>
+</html>

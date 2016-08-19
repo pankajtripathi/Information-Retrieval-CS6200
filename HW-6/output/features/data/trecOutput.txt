@@ -1,0 +1,67 @@
+Pankaj:data pankajtripathi$ perl trec_eval.pl qrels.adhoc.51-100.AP89.txt testPerformance.txt 
+
+Queryid (Num):        5
+Total number of documents over all queries
+    Retrieved:     2840
+    Relevant:      1106
+    Rel_ret:       1106
+Interpolated Recall - Precision Averages:
+    at 0.00       0.5934
+    at 0.10       0.5226
+    at 0.20       0.5176
+    at 0.30       0.5096
+    at 0.40       0.5029
+    at 0.50       0.5029
+    at 0.60       0.5025
+    at 0.70       0.4984
+    at 0.80       0.4963
+    at 0.90       0.4843
+    at 1.00       0.4693
+Average precision (non-interpolated) for all rel docs(averaged over queries)
+                  0.4746
+Precision:
+  At    5 docs:   0.3600
+  At   10 docs:   0.4600
+  At   15 docs:   0.4533
+  At   20 docs:   0.4600
+  At   30 docs:   0.4200
+  At  100 docs:   0.4140
+  At  200 docs:   0.4460
+  At  500 docs:   0.3740
+  At 1000 docs:   0.2212
+R-Precision (precision after R (= num_rel for a query) docs retrieved):
+    Exact:        0.4702
+
+Pankaj:data pankajtripathi$ perl trec_eval.pl qrels.adhoc.51-100.AP89.txt trainingPerformance.txt 
+
+Queryid (Num):       20
+Total number of documents over all queries
+    Retrieved:     4618
+    Relevant:       726
+    Rel_ret:        726
+Interpolated Recall - Precision Averages:
+    at 0.00       1.0000
+    at 0.10       0.9947
+    at 0.20       0.9947
+    at 0.30       0.9947
+    at 0.40       0.9947
+    at 0.50       0.9933
+    at 0.60       0.9933
+    at 0.70       0.9933
+    at 0.80       0.9635
+    at 0.90       0.8918
+    at 1.00       0.7485
+Average precision (non-interpolated) for all rel docs(averaged over queries)
+                  0.9621
+Precision:
+  At    5 docs:   0.9000
+  At   10 docs:   0.8550
+  At   15 docs:   0.7967
+  At   20 docs:   0.7525
+  At   30 docs:   0.6617
+  At  100 docs:   0.3425
+  At  200 docs:   0.1780
+  At  500 docs:   0.0726
+  At 1000 docs:   0.0363
+R-Precision (precision after R (= num_rel for a query) docs retrieved):
+    Exact:        0.9579
