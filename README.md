@@ -2,10 +2,7 @@
 
 ##Homework-1 : Retrieval Models
 __Objective__      
-Implement and compare various retrieval systems using vector space models and language models. Explain how and why their performance differs.
-
-This assignment will also introduce you to elasticsearch: one of the many available commercial-grade indexes. These instructions will generally not spell out how to accomplish various tasks in elasticsearch; instead, you are encouraged to try to figure it out by reading the online documentation. If you are having trouble, feel free to ask for help on Piazza or in office hours.
-
+Implement and compare various retrieval systems using vector space models and language models. Explain how and why their performance differs.       
 This assignment involves writing two programs:
 
 A program to parse the corpus and index it with elasticsearch
@@ -178,3 +175,195 @@ __Vertical Search__
 
 Add all 90,000 documents to an elasticsearch index, using the canonical URL as the document ID for de-duplication, and create a simple HTML page which runs queries against your elasticsearch index. You may either write your own interface, or use an existing tool such as Calaca or FacetView. Or modify this one written by one of our grad students. Your search engine should allow users to enter text queries, and display elasticsearch results to those queries from your index. The result list should contain at minimum the URL to the page you crawled.
 Make sure you run several queries on your group’s topic, and you think about the result quality. During your demo, you will be asked to explain how your seeds and crawls affected the search results.
+
+##Homework4: Web graph computation
+__Objective__
+  Compute link graph measures for each page crawled using the adjacency matrix. While you have to use the merged team index, this assignment is individual (can compare with teammates the results)      
+__Page Rank - crawl__
+Compute the PageRank of every page in your crawl (merged team index). You can use any of the methods described in class: random walks (slow), transition matrix, algebraic solution etc. List the top 500 pages by the PageRank score. You can take a look at this PageRank pseudocode (for basic iteration method) to get an idea       
+__Page Rank - other graph__    
+Get the graph linked by the in-links in file resources/wt2g_inlinks.txt.zip
+Compute the PageRank of every page. List the top 500 pages by the PageRank score.       
+__HITS- crawl__     
+Compute Hubs and Authority score for the pages in the crawl (merged team index)         
+A. Create a root set: Obtain the root set of about 1000 documents by ranking all pages using an IR function (e.g. BM25, ES Search). You will need to use your topic as your query       
+
+B. Repeat few two or three time this expansion to get a base set of about 10,000 pages: 
+For each page in the set, add all pages that the page points to
+For each page in the set, obtain a set of pages that pointing to the page
+if the size of the set is less than or equal to d, add all pages in the set to the root set
+if the size of the set is greater than d, add an RANDOM (must be random) set of d pages from the set to the root set
+Note: The constant d can be 200. The idea of it is trying to include more possibly strong hubs into the root set while constraining the size of the root size.        
+C. Compute HITS. For each web page, initialize its authority and hub scores to 1. Update hub and authority scores for each page in the base set until convergence       
+
+Authority Score Update: Set each web page's authority score in the root set to the sum of the hub score of each web page that points to it      
+Hub Score Update: Set each web pages's hub score in the base set to the sum of the authority score of each web page that it is pointing to       
+After every iteration, it is necessary to normalize the hub and authority scores. Please see the lecture note for detail.
+Create one file for top 500 hub webpages, and one file for top 500 authority webpages. The format for both files should be:     
+[webpageurl][tab][hub/authority score]\n   
+
+##Homework5: Relevance Assessments, IR Evaluation
+__Objective__         
+In this assignment, you will continue the work from previous HW by evaluating your vertical search engine. You will continue to work within the team you formed earlier.
+You will be given queries for your topical crawl. Manual relevance assessments have to be collected, using your vertical search engine and a web interface.
+
+You will have to code up the IR evaluation measures, essentially rewriting treceval. It is ok to look at the provided treceval code, but you have to write your own.
+
+
+__Assessments and IR Evaluation.__       
+Obtaining queries
+Each team will be assigned 3-4 queries specific to the topic you worked on HW3. The queries are going to show up in your Dropbox team file, or you can obtain them from the TAs.
+
+Assessment graphical interface
+In order to assess relevance of documents, you will have to create a web interface that displays the topic/query, and a given document list. Each URL in the list should be clickable to lead to the document text, pooled either from ES raw-html field or live from original URL. You would probably take as a start the web GUI you used for vertical search in HW3.
+
+The interface has to contain an input fields for each URL/snippet in order for the assessor to input a 3-scale grade “non-relevant”, “relevant”, “very relevant” (or 0,1,2). The can be an input checkboxes, radio boxes, dropdown list, text input box, etc. The interface should also record the assessor ID (by name). You can add a “submit” button somewhere, and a count of how many documents have been assessed.
+
+The input assessments should be stored in a QREL file (txt format) as
+
+QueryID AssessorID DocID Grade
+
+QueryID AssessorID DocID Grade
+
+…..
+
+where DocID is the canonical URL, AssessorID is your name (no spaces, like "Michael_Jordan"), Grade is one of {0,1,2}. You can temporarily store information in ES or a database if that is easier for you.
+
+While not ideal, we are aware of some students are not being versed in Web-Development. So we will allow for the input to be manual directly to the QREL file. Thats is, you will use the vertical search web interface from HW3 with no input fields, and manually copy-paste the IDs into the qrel together with the assigned relevance grade.
+
+You will have to demo your assessment process (the interface and the recording of grades).
+
+__Manual assessments.__      
+Each student has to manually assess about 200 documents for each query. So if your team has 3 queries, each student will assess 600 documents, and each document-per-query will be assessed three times (assuming three team members).
+
+The QREL file should record all the assessments and be placed in your Dropbox folder when you are done.
+
+__Write your own trec_eval__      
+Write a program that replicates trec_eval functionality. Input : a ranked list file and QREL file, both in TREC format. Both files can contain results and assessments for multiple queryIDs.
+
+First, sort docIDS per queryID by score. Then for each query compute R-precision, Average Precision, nDCG, precision@k and recall@k and F1@k (k=5,10, 20, 50, 100). Average these numbers over the queryIDs. If run with -q option your program should display the measures for each queryID before displaying the averages.
+
+Run your treceval on HW1 runs with the qrel provided to confirm that it gives the same values as the provided treceval.
+
+Run your trec_eval on the HW3 vertical search engine.
+
+__Precision-Recall Curves__      
+For each one of the HW4 queries, create a precision-recall plot. Force the curve to be non-increasing as discussed in class.
+
+##Homework6: Machine Learning for IR
+__Objective__        
+In this assignment, you will represent documents as numerical features, and apply machine learning to obtain retrieval ranked lists. The data is the AP89 collection we used for HW1.
+
+__Data__        
+Restrict the data to documents present in the QREL. That is, for each of the 25 queries only consider documents that have a qrel assessment. You should have about 14193 documents; some of the docIDs will appear multiple times for multiple queries, while most documents will not appear at all.
+
+Split the data randomly into 20 “training” quereis and 5 “testing” queries.
+
+__Part 1: Document-Query IR Features__            
+The general plan is to build a query-doc static feature matrix. 
+qid-docid f1 f2 f3 … fd label 
+qid-docid f1 f2 f3 … fd label … 
+qid-docid f1 f2 f3 … fd label
+
+You can rearrange this matrix in any format required by the training procedure of the learning algorithm.
+
+Extract for each query-doc the IR features. These are your HW1 and HW2 models like BM25, Language Models, Cosine, Proximity, etc. The cells are feature values, or the scores given by the IR functions. The label is the qrel relevance value.     
+Note: your IR models from HW1 and HW2 might be truncated at 1000 docs, in which case the ranked lists wont contain features for every single qrel document. The better option is to go back to these IR models and compute the scores for all  required qrel docs.     
+Alternative option: every document not in top 1000 for an IR function, gets a make-up score=feature value. This make up score should not be 0 by default; instead it should be the lowest IR score form HW1 for that query, i.e. the score at rank 1000. (A 0 score might be fine for some, but for certain IR functions like language models 0 is actually a big value.)      
+You can add other features (columns) that are doc-query-dependent (like number of query terms in document), or doc-dependent and query-independent (like pagerank).      
+You cannot add features that have, for a given document, different meanings on different queries, for example the unigram "China"; such a feature might be important for a query and irrelevant for a different query.         
+__Train a learning algorithm__      
+Using the “train” queries static matrix, train a learner to compute a model relating labels to the features. You can use a learning library like SciPy/NumPy, C4.5, Weka, LibLinear, SVM Light, etc. The easiest models are linear regression and decision trees.
+
+__Test the model__      
+For each of the 5 testing queries:
+
+1. Run the model to obtain scores  
+2. Treat the scores as coming from an IR function, and rank the documents
+3. Format the results as in HW1
+4. Run treceval and report evaluation as “testingperformance.       
+__Test the model on training data__       
+Same as for testing, but on the 20 training queries. Run the learned model against the training matrix, compute prediction/scores, rank, and treceval. Report as “training performance”.
+
+##Homework7: Unigram/Bigram Classifier, Spam 
+__Objective__      
+Build a Spam Classifier using Machine Learning and ElasticSearch.
+
+__Data__      
+Consider the trec07_spam set of documents annotated for spam, available “data resources”. 
+First read and accept agreement at http://plg.uwaterloo.ca/~gvcormac/treccorpus07/. Then download the 255 MB Corpus (trec07p.tgz). The html data is in data/; the labels ("spam" or "ham") are in full/.
+
+Index the documents with ElasticSearch, but use library to clean the html into plain test first. You dont have to do stemming or skipping stopwords (up to you); eliminating some punctuation might be useful.     
+Cleaning Data is Required: By "unigram" we mean an English word, so as part of reading/processing data there will be a filter step to remove anything that doesnt look like an English word or small number. Some mistake unigrams passing the filter are acceptable, if they look like words (e.x. "artist_", "newyork", "grande") as long as they are not overwhelming the set of valid unigrams. You can use any library/script/package for cleaning, or share your cleaning code (but only the cleaning code) with the other students.    
+Make sure to have a field “label” with values “yes” or “no” (or "spam"/"ham") for each document.     
+Partition the spam data set into TRAIN 80% and TEST 20%. One easy way to do so is to add to each document in ES a field "split" with values either "train" or "test" randomly, following the 80%-20% rule. Thus there will be 2 feature matrices, one for training and one for testing (different documents, same exact columns/features). The spam/ham distribution is roughly a third ham and two thirds spam; you should have a similar distribution in both TRAIN and TEST sets.
+ 
+__Part1: Manual Spam Features__      
+Manually create a list of ngrams (unigrams, bigrams, trigrams, etc) that you think are related to spam. For example : “free” , “win”, “porn”, “click here”, etc. These will be the features (columns) of the data matrix. Next iteration of the course: dont use your word/features, instead use the ones from this list.     
+You will have to use ElasticSearch querying functionality in order to create feature values for each document, for each feature. There are ways to ask ES to give all matches (aka feature values) for a given ngram, so you dont have to query (ngram, doc) for all docs separately.     
+For part 1, you can use a full matrix since the size wont be that big (docs x features). However, for part 2 you will have to use a sparse matrix, since there will be a lot more features.     
+__Train a learning algorithm__      
+The label, or outcome, or target are the spam annotation “yes” / “no” or you can replace that with 1/0.
+
+Using the “train” queries static matrix, train a learner to compute a model relating labels to the features on TRAIN set. You can use a learning library like SciPy/NumPy, C4.5, Weka, LibLinear, SVM Light, etc. The easiest models are linear regression and decision trees.
+
+__Test the spam model__      
+Test the model on TEST set. You will have to create a testing data matrix with feature values in the same exact way as you created the training matrix: use ElasticSearch to query for your features, use the scores are feature values.
+
+__Run the model to obtain scores__      
+Treat the scores as coming from an IR function, and rank the documents
+Display first few “spam” documents and visually inspect them. You should have these ready for demo. IMPORTANT : Since they are likely to be spam, if you display these in a browser, you should turn off javascript execution to protect your computer.
+
+__Part 2: All unigrams as features__      
+A feature matrix should contain a column/feature for every unigram extracted from training documents. You will have to use a particular data format described in class (note, toy example), since the full matrix becomes too big. Write the matrix and auxiliary files on disk. 
+
+Given the requirements on data cleaning, you should not have too many unigrams, but still many enough to have to use a sparse representation.
+Extracting all unigrams using Elastic Search calls
+This is no diffeernt than part1 in terms of the ES calls, but you'd have to first generate a list with all unigrams.       
+__Training and testing__      
+Once the feature matrices are ready (one for training, the second for testing), run either LibLinear Regression (with sparse input)  or a learning algorithm implemented by us to take advantage of the sparse data representations.      
+__Feature analysis__      
+Identify from the training log/model the top (most important) spam unigrams. Do they match your manual spam features from part 1?
+
+##Homework8: Clustering and Topic Models 
+__Objective__      
+In this assignment, you will cluster documents, detect topics, and represent documents in topic space.
+Data : We are using the AP89 collection. 
+
+__A) Topic Models per Query__     
+For any given query, select a set of documents that is union of top 1000 BM25 docs (for that query) and the qrel docs (for that query). The set will be a little over 1000 docs since there will be considerable overlap.      
+Then use package listed below to perform LDA. Your output must contain     
+1. the topics detected, with each topic represented as distribution over words (list the top 20-30 words)
+2. the documents represented as topic distribution. Each document should have listed the most relevant 10 topics or so
+Repeat the process for each one of the 25 queries.     
+
+__LDA: python sklearn__       
+
+1) Install scikit i.e. sklearn package for python
+
+2)Convert the Top set of documents for each query into document-term matrix. You can use CountVectorizer from sklearn.feature_extraction.text package
+It is good idea to restrict stop words, words with very high document frequency and also words not occouring more than say 1 or 2 time. These all can be passed in CountVectorizer
+
+3)Train by fitting the sparse matrix obtained from above to LatentDirichletAllocation from sklearn.decomposition. This will fetch N topics with M features as word. Sort features probability to get top K words.
+
+4)Transform the model to get distribution of topic over documents. Sort them again and list top 3 topics per document.
+Also fetch top 3 topics for each query by performing by rank measure of topics or by checking for feature occurrences in each document and sorting top 3 topic for max score 
+
+
+__B) LDA-topics and clustering__     
+Run LDA on the entire AP89 collection, with about T=200 topics. Obtain a representation of all documents in these topics.
+Then run a clustering-partition algorithm on documents in this topic representation. partition means every document gets assigned to exactly one cluster, like with K-means. You are free to use any clustering library/package. Target K=25 clusters. List each cluster with its documents IDs. You should have an ES index set up so we can look up documents by ID.
+
+How to evaluate: There are about 1831 relevant documents in total. Consider all the pairs of two relevant documents, that is (1831 choose 2).     
+For each pair, count a 1 in the appropriate cell of the following confusion table:       
+
+|                 | same cluster | different cluster |
+|-----------------|--------------|-------------------|
+| same query      |              |                   |
+| different query |              |                   |
+
+
+
+  
+
+
