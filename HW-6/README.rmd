@@ -29,6 +29,7 @@ For each of the 5 testing queries:
 1. Run the model to obtain scores  
 2. Treat the scores as coming from an IR function, and rank the documents
 3. Format the results as in HW1
-4. Run treceval and report evaluation as “testingperformance.       
+4. Run treceval and report evaluation as “testingperformance.     
+
 __Test the model on training data__       
 Same as for testing, but on the 20 training queries. Run the learned model against the training matrix, compute prediction/scores, rank, and treceval. Report as “training performance”.
