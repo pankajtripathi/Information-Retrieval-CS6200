@@ -1,10 +1,10 @@
 # Information-Retrieval
 
-##Homework-1 : Retrieval Models
-##Homework-2: Indexing, Term Positions     
-##Homework3: Crawling, Vertical Search
-##Homework4: Web graph computation
-##Homework5: Relevance Assessments, IR Evaluation
-##Homework6: Machine Learning for IR
-##Homework7: Unigram/Bigram Classifier, Spam 
-##Homework8: Clustering and Topic Models 
+__Homework-1 : Retrieval Models__           
+__Homework-2: Indexing, Term Positions__     
+__Homework3: Crawling, Vertical Search__      
+__Homework4: Web graph computation__     
+__Homework5: Relevance Assessments, IR Evaluation__      
+__Homework6: Machine Learning for IR__     
+__Homework7: Unigram/Bigram Classifier, Spam__     
+__Homework8: Clustering and Topic Models__      
