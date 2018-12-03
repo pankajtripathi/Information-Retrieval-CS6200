@@ -1,4 +1,4 @@
-##Homework7: Unigram/Bigram Classifier, Spam 
+## Homework7: Unigram/Bigram Classifier, Spam 
 __Objective__      
 Build a Spam Classifier using Machine Learning and ElasticSearch.
 
