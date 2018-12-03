@@ -1,4 +1,4 @@
-##Homework8: Clustering and Topic Models 
+## Homework8: Clustering and Topic Models 
 __Objective__      
 In this assignment, you will cluster documents, detect topics, and represent documents in topic space.
 Data : We are using the AP89 collection. 
