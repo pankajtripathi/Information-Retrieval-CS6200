@@ -1,4 +1,4 @@
-##Homework-2: Indexing, Term Positions     
+## Homework-2: Indexing, Term Positions     
 __Objective__     
 Implement your own index to take the place of elasticsearch in the HW1 code, and index the document collection used for HW1. Your index should be able to handle large numbers of documents and terms without using excessive memory or disk I/O.
 
