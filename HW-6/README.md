@@ -1,4 +1,4 @@
-##Homework6: Machine Learning for IR
+## Homework6: Machine Learning for IR
 __Objective__        
 In this assignment, you will represent documents as numerical features, and apply machine learning to obtain retrieval ranked lists. The data is the AP89 collection we used for HW1.
 
