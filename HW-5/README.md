@@ -1,4 +1,4 @@
-##Homework5: Relevance Assessments, IR Evaluation
+## Homework5: Relevance Assessments, IR Evaluation
 __Objective__         
 In this assignment, you will continue the work from previous HW by evaluating your vertical search engine. You will continue to work within the team you formed earlier.
 You will be given queries for your topical crawl. Manual relevance assessments have to be collected, using your vertical search engine and a web interface.
