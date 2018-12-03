@@ -1,4 +1,4 @@
-##Homework-1 : Retrieval Models
+## Homework-1 : Retrieval Models
 __Objective__      
 Implement and compare various retrieval systems using vector space models and language models. Explain how and why their performance differs.       
 This assignment involves writing two programs:
