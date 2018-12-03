@@ -1,4 +1,4 @@
-##Homework3: Crawling, Vertical Search
+## Homework3: Crawling, Vertical Search
 __Objective__     
 In this assignment, you will work with a team to create a vertical search engine using elasticsearch. Please read these instructions carefully: although you are working with teammates, you will be graded individually for most of the assignment.
 
