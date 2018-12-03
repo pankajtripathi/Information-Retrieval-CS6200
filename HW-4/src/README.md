@@ -1,4 +1,4 @@
-##Homework4: Web graph computation
+## Homework4: Web graph computation
 __Objective__
   Compute link graph measures for each page crawled using the adjacency matrix. While you have to use the merged team index, this assignment is individual (can compare with teammates the results)      
 __Page Rank - crawl__
